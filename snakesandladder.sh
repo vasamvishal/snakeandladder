@@ -21,10 +21,12 @@ random1=$(( RANDOM%3 ))
         position=$(( $position - $random ));;
        
  esac
-if [ $position -lt 0 ]
-then
-position=0
-
+ if [ $position -lt 0 ]
+    then
+       position=0
+ elif [ $position -gt 100 ]
+    then 
+       position=$(( $position-$random ))
  fi
 }
 
