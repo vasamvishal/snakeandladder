@@ -1,26 +1,23 @@
 #Welcome to snakes and ladder
 position=0;
 ladder=1;
-noplay=0;
+noPlay=0;
 snake=2;
-allPosition=0;
-totaldie=0;
+totalDiePlayed=0;
 function die()
 {
 random=$(( RANDOM%6 ))
-totaldie=$(( $totaldie+$random ))
+totalDiePlayed=$(( $totalDiePlayed+1 ))
 }
 function play()
 {
-random1=$(( RANDOM%3 )) 
-
- case $random1 in $noplay )
-        position=$(( $position + 0 ));;
+ random1=$(( RANDOM%3 )) 
+ case $random1 in $noPlay )
+        position=$(( $position + $random+1 ));;
                $ladder )
-        position=$(( $position + $random ));;
+        position=$(( $position + $random+1 ));;
                $snake )
-        position=$(( $position - $random ));;
-           
+        position=$(( $position - $random+1 ));;
  esac
  if [ $position -lt 0 ]
     then
@@ -31,7 +28,7 @@ random1=$(( RANDOM%3 ))
  fi
 }
 
-while [ $position -lt 100 ]
+while [ $position -lt 10 ]
 do
    die
    play
