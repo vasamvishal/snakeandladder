@@ -1,139 +1,120 @@
 
-
 #!/bin/bash -x
-echo "snake and ladder game"
+echo "Snake and Ladder game"
 
+#CONSTANT
+PLAYER=2
+LADDER=1
+SNAKE=2
+NO_PLAY=0
+
+#variable
 position1=0
 position2=0
-player=2
-number=0
-Ladder=1
-snake=2
-diceCount=0
-noPlay=0
+dice_Count=0
+dice_times=0
 
-function die()
+function diceRolled()
 {
-random=$(( RANDOM%6+1 ))
-totalDiePlayed=$(( $totalDiePlayed+1 ))
+	dice_times=$(( RANDOM%6+1 ))
 }
-function whil()
+
+function playGame()
 {
- while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
-do  
-   die
-   play
-done
+	while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
+	do  
+		diceRolled
+		startingGame
+	done
 }
-function check()
+
+
+function startingGame()
 {
- while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
-do
-   break;
-done
-}
-function randomnumber()
-{
-
-random1=$((RANDOM%3))
-case $random1 in  $noPlay )
-position2=$(($position2+0 ));;
-                  $Ladder )
-echo "Played again for ladder"
-position2=$(($position2 + $random)) 
-                       check2
-                       check
-                        die
-                      randomnumber ;;
-#position2=$(($position2 + $random));;
-                          $snake )
-position2=$(($position2 - $random));;
-esac 
-
-}
-
-function random()
-{
-random1=$((RANDOM%3))
-case $random1 in  $noPlay )
-position1=$(($position1+0 ));;
-                  $Ladder )
-echo "Played again for ladder"
-position1=$(($position1 + $random))
-                       check1
-                       check
-                       die
-                      random ;;
-                          $snake )
-position1=$(($position1 - $random));;
-esac 
-
-}
-
-function check1(){
- 
-
-      if [ $position1 -gt 100 ]
-         then 
-            position1=$(($position1-$random))
-      fi
-    
-      if [ $position1 -eq 100 ]
-      then 
-         echo $i "player win"
-          position=100
-      fi    
-    
-      if [ $position1 -lt 0 ]
-         then 
-            position1=0
-      fi
-           echo "Player 1 played"
-           echo "Position played" $position1
-      
-}
-function check2()
-{
-if [ $position2 -gt 100 ]
-        then 
-          position2=$(($position2-$random))
-        fi
-    
-        if [ $position2 -eq 100 ]
-        then 
-         echo $i "player win"
-         position2=100;
-        fi    
-        if [ $position2 -lt 0 ]
-        then 
-          position2=0
-        fi
-       echo "Player 2 play"
-       echo "Player2" $position2
-
-}
-function play() {
   
-   for(( i=1; i<=$player; i++))
+	for(( count=1; count<=$PLAYER; count++))
    do
-     echo $i
-     if [ $i -eq 1 ]
-      then
-         random 
-         echo $position1
-         check1
-      elif [ $i -eq 2 ]
-       then
-        die
-        randomnumber 
-        echo $position2
-       fi    
-  done
+   echo $count
+   if [ $count -eq 1 ]
+   then
+	   options_for_Position1
+   	position1Value
+   	echo $position1
+   elif [ $count -eq 2 ]
+   then
+		diceRolled
+   	options_for_Position2
+   	position2Value
+   	echo $position2
+	fi    
+	done
 }
-whil
-echo dice count :$totalDiePlayed
 
-  
-    
+function position1Value()
+{
+	if [ $position1 -gt 100 ]
+	then 
+		position1=$(( $position1-$dice_times ))
+ 	elif [ $position1 -eq 100 ]
+	then 
+      position1=100    
+   elif [ $position1 -lt 0 ]
+   then 
+      position1=0
+	fi 
+}
+
+function position2Value()
+{
+
+	if [ $position2 -gt 100 ]
+   then 
+      position2=$(($position2-$dice_times))
+ 	elif [ $position2 -eq 100 ]
+   then 
+       echo $i "player win"
+       position2=100;    
+   elif [ $position2 -lt 0 ]
+   then 
+       position2=0
+   fi
+}
+
+function options_for_Position2()
+{
+
+	random1=$((RANDOM%3))
+	case $random1 in  $NO_PLAY )
+		position2=$(($position2+0 ));;
+             $LADDER )
+      position2=$(($position2 + $dice_times)) 
+      position2Value
+      diceRolled
+      options_for_Position2 ;;
+              $SNAKE )
+      position2=$(($position2 - $dice_times));;
+	esac 
+
+}
+
+function options_for_Position1()
+{
+
+	random1=$((RANDOM%3))
+	case $random1 in $NO_PLAY )
+      position1=$(( $position1+0 ));;
+            $LADDER )
+      position1=$(($position1 + $dice_times))
+      position1Value
+      diceRolled
+      options_for_Position1 ;;
+              $SNAKE )
+		position1=$(($position1 - $dice_times));;
+	esac 
+
+}
+playGame
+
+ 
 
 
