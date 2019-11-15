@@ -1,4 +1,5 @@
 
+
 #!/bin/bash -x
 echo "snake and ladder game"
 
@@ -19,21 +20,30 @@ totalDiePlayed=$(( $totalDiePlayed+1 ))
 function whil()
 {
  while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
-do
+do  
    die
    play
 done
 }
-
+function check()
+{
+ while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
+do
+   break;
+done
+}
 function randomnumber()
 {
+
 random1=$((RANDOM%3))
 case $random1 in  $noPlay )
 position2=$(($position2+0 ));;
                   $Ladder )
 echo "Played again for ladder"
-position2=$(($position2 + $random))
-                       die
+position2=$(($position2 + $random)) 
+                       check2
+                       check
+                        die
                       randomnumber ;;
 #position2=$(($position2 + $random));;
                           $snake )
@@ -50,6 +60,8 @@ position1=$(($position1+0 ));;
                   $Ladder )
 echo "Played again for ladder"
 position1=$(($position1 + $random))
+                       check1
+                       check
                        die
                       random ;;
                           $snake )
@@ -58,16 +70,9 @@ esac
 
 }
 
+function check1(){
+ 
 
-function play() {
-  
-   for(( i=1; i<=$player; i++))
-   do
-     echo $i
-      if [ $i -eq 1 ]
-      then
-         random 
-         echo $position1
       if [ $position1 -gt 100 ]
          then 
             position1=$(($position1-$random))
@@ -76,7 +81,7 @@ function play() {
       if [ $position1 -eq 100 ]
       then 
          echo $i "player win"
-      break
+          position=100
       fi    
     
       if [ $position1 -lt 0 ]
@@ -85,13 +90,11 @@ function play() {
       fi
            echo "Player 1 played"
            echo "Position played" $position1
-      fi
-      if [ $i -eq 2 ]
-      then
-        die
-        randomnumber 
-        echo $position2
-        if [ $position2 -gt 100 ]
+      
+}
+function check2()
+{
+if [ $position2 -gt 100 ]
         then 
           position2=$(($position2-$random))
         fi
@@ -99,9 +102,8 @@ function play() {
         if [ $position2 -eq 100 ]
         then 
          echo $i "player win"
-         break
+         position2=100;
         fi    
-    
         if [ $position2 -lt 0 ]
         then 
           position2=0
@@ -109,9 +111,29 @@ function play() {
        echo "Player 2 play"
        echo "Player2" $position2
 
-     fi
+}
+function play() {
+  
+   for(( i=1; i<=$player; i++))
+   do
+     echo $i
+     if [ $i -eq 1 ]
+      then
+         random 
+         echo $position1
+         check1
+      elif [ $i -eq 2 ]
+       then
+        die
+        randomnumber 
+        echo $position2
+       fi    
   done
 }
 whil
 echo dice count :$totalDiePlayed
+
+  
+    
+
 
