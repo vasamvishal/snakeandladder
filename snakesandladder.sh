@@ -16,6 +16,49 @@ function die()
 random=$(( RANDOM%6+1 ))
 totalDiePlayed=$(( $totalDiePlayed+1 ))
 }
+function whil()
+{
+ while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
+do
+   die
+   play
+done
+}
+
+function randomnumber()
+{
+random1=$((RANDOM%3))
+case $random1 in  $noPlay )
+position2=$(($position2+0 ));;
+                  $Ladder )
+echo "Played again for ladder"
+position2=$(($position2 + $random))
+                       die
+                      randomnumber ;;
+#position2=$(($position2 + $random));;
+                          $snake )
+position2=$(($position2 - $random));;
+esac 
+
+}
+
+function random()
+{
+random1=$((RANDOM%3))
+case $random1 in  $noPlay )
+position1=$(($position1+0 ));;
+                  $Ladder )
+echo "Played again for ladder"
+position1=$(($position1 + $random))
+                       die
+                      random ;;
+#position1=$(($position1 + $random));;
+                          $snake )
+position1=$(($position1 - $random));;
+esac 
+
+}
+
 
 function play() {
   
@@ -24,14 +67,20 @@ function play() {
      echo $i
    if [ $i -eq 1 ]
     then
-      random1=$((RANDOM%3))  
-      case $random1 in  $noPlay )
-       position=$(($position1+0 ));;
-                       $Ladder )
-       position1=$(($position1 + $random));;
-                        $snake )
-       position1=$(($position1 - $random));;
-      esac
+      random  
+     # case $random1 in  $noPlay )
+     #  position1=$(($position1+0 ));;
+     #                  $Ladder )
+    # echo "Played again for ladder"
+      # position1=$(($position1 + $random))
+        #                die
+       #                random 
+                         
+      # position1=$(($position1 + $random));;
+
+     #                   $snake )
+    #   position1=$(($position1 - $random));;
+   #   esac
       echo $position1
       if [ $position1 -gt 100 ]
       then 
@@ -53,16 +102,22 @@ function play() {
     fi
       if [ $i -eq 2 ]
       then
-        random=$((RANDOM%6+1))
-        random1=$((RANDOM%3))  
-        diceCount=$(($diceCount+$random))
-        case $random1 in  $noPlay )
-         position=$(($position1+0 ));;
-                          $Ladder )
-         position2=$(($position2 + $random));;
-                           $snake )
-         position2=$(($position2 - $random));;
-        esac
+        die
+        randomnumber
+       # random1=$((RANDOM%3))  
+       # diceCount=$(($diceCount+$random))
+        #case $random1 in  $noPlay )
+        # position2=$(($position2+0 ));;
+         #                 $Ladder )
+         # echo "Played again for ladder"
+        # position2=$(($position2 + $random))
+         #              die
+          #            random
+ 	# position2=$(($position2 + $random));;
+         #                 $snake )
+        # position2=$(($position2 - $random));;
+        # esac 
+            echo $position2
         if [ $position2 -gt 100 ]
         then 
           position2=$(($position2-$random))
@@ -84,11 +139,14 @@ function play() {
       fi
   done
 }
- while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
-do
-   die
-   play
-done
-
+#function whil()
+#{
+# while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
+#do
+ #  die
+ #  play
+#done
+#}
+whil
 echo dice count :$totalDiePlayed
 
