@@ -52,7 +52,6 @@ echo "Played again for ladder"
 position1=$(($position1 + $random))
                        die
                       random ;;
-#position1=$(($position1 + $random));;
                           $snake )
 position1=$(($position1 - $random));;
 esac 
@@ -65,59 +64,33 @@ function play() {
    for(( i=1; i<=$player; i++))
    do
      echo $i
-   if [ $i -eq 1 ]
-    then
-      random  
-     # case $random1 in  $noPlay )
-     #  position1=$(($position1+0 ));;
-     #                  $Ladder )
-    # echo "Played again for ladder"
-      # position1=$(($position1 + $random))
-        #                die
-       #                random 
-                         
-      # position1=$(($position1 + $random));;
-
-     #                   $snake )
-    #   position1=$(($position1 - $random));;
-   #   esac
-      echo $position1
+      if [ $i -eq 1 ]
+      then
+         random 
+         echo $position1
       if [ $position1 -gt 100 ]
-      then 
-       position1=$(($position1-$random))
+         then 
+            position1=$(($position1-$random))
       fi
     
       if [ $position1 -eq 100 ]
       then 
-       echo $i "player win"
-       break
+         echo $i "player win"
+      break
       fi    
     
       if [ $position1 -lt 0 ]
-      then 
-       position1=0
+         then 
+            position1=0
       fi
            echo "Player 1 played"
            echo "Position played" $position1
-    fi
+      fi
       if [ $i -eq 2 ]
       then
         die
-        randomnumber
-       # random1=$((RANDOM%3))  
-       # diceCount=$(($diceCount+$random))
-        #case $random1 in  $noPlay )
-        # position2=$(($position2+0 ));;
-         #                 $Ladder )
-         # echo "Played again for ladder"
-        # position2=$(($position2 + $random))
-         #              die
-          #            random
- 	# position2=$(($position2 + $random));;
-         #                 $snake )
-        # position2=$(($position2 - $random));;
-        # esac 
-            echo $position2
+        randomnumber 
+        echo $position2
         if [ $position2 -gt 100 ]
         then 
           position2=$(($position2-$random))
@@ -136,17 +109,9 @@ function play() {
        echo "Player 2 play"
        echo "Player2" $position2
 
-      fi
+     fi
   done
 }
-#function whil()
-#{
-# while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
-#do
- #  die
- #  play
-#done
-#}
 whil
 echo dice count :$totalDiePlayed
 
