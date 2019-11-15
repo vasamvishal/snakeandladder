@@ -7,7 +7,8 @@ PLAYER=2
 LADDER=1
 SNAKE=2
 NO_PLAY=0
-
+FINAL_POSITION=100
+LAST_POSITION=0
 #variable
 position1=0
 position2=0
@@ -21,7 +22,7 @@ function diceRolled()
 
 function playGame()
 {
-	while ! [[ $position1 -eq 100 || $position2 -eq 100 ]]
+	while ! [[ $position1 -eq $FINAL_POSITION || $position2 -eq $FINAL_POSITION ]]
 	do  
 		diceRolled
 		startingGame
@@ -52,31 +53,31 @@ function startingGame()
 
 function position1Value()
 {
-	if [ $position1 -gt 100 ]
+	if [ $position1 -gt $FINAL_POSITION ]
 	then 
 		position1=$(( $position1-$dice_times ))
- 	elif [ $position1 -eq 100 ]
+ 	elif [ $position1 -eq $FINAL_POSITION ]
 	then 
-      position1=100    
-   elif [ $position1 -lt 0 ]
+      position1=$FINAL_POSITION
+   elif [ $position1 -lt $LAST_POSITION ]
    then 
-      position1=0
+      position1=$LAST_POSITION
 	fi 
 }
 
 function position2Value()
 {
 
-	if [ $position2 -gt 100 ]
+	if [ $position2 -gt $FINAL_POSITION ]
    then 
       position2=$(($position2-$dice_times))
- 	elif [ $position2 -eq 100 ]
+ 	elif [ $position2 -eq $FINAL_POSITION ]
    then 
        echo $i "player win"
-       position2=100;    
-   elif [ $position2 -lt 0 ]
+       position2=$FINAL_POSITION;    
+   elif [ $position2 -lt $LAST_POSITION ]
    then 
-       position2=0
+       position2=$LAST_POSITION
    fi
 }
 
