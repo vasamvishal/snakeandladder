@@ -115,7 +115,3 @@ function options_for_Position1()
 
 }
 playGame
-
- 
-
-
