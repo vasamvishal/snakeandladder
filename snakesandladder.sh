@@ -24,8 +24,8 @@ function playGame()
 {
 	while ! [[ $position1 -eq $FINAL_POSITION || $position2 -eq $FINAL_POSITION ]]
 	do  
-		diceRolled
-		startingGame
+	  diceRolled
+	  startingGame
 	done
 }
 
@@ -33,17 +33,16 @@ function playGame()
 function startingGame()
 {
   
-	for(( count=1; count<=$PLAYER; count++))
-   do
-   echo $count
-   if [ $count -eq 1 ]
-   then
-	   options_for_Position1
+   	for(( count=1; count<=$PLAYER; count++))
+   	do
+   	if [ $count -eq 1 ]
+   	then
+        options_for_Position1
    	position1Value
    	echo $position1
-   elif [ $count -eq 2 ]
-   then
-		diceRolled
+   	elif [ $count -eq 2 ]
+   	then
+	diceRolled
    	options_for_Position2
    	position2Value
    	echo $position2
@@ -55,13 +54,13 @@ function position1Value()
 {
 	if [ $position1 -gt $FINAL_POSITION ]
 	then 
-		position1=$(( $position1-$dice_times ))
+	    position1=$(( $position1-$dice_times ))
  	elif [ $position1 -eq $FINAL_POSITION ]
 	then 
-      position1=$FINAL_POSITION
-   elif [ $position1 -lt $LAST_POSITION ]
-   then 
-      position1=$LAST_POSITION
+            position1=$FINAL_POSITION
+        elif [ $position1 -lt $LAST_POSITION ]
+        then 
+            position1=$LAST_POSITION
 	fi 
 }
 
@@ -69,16 +68,16 @@ function position2Value()
 {
 
 	if [ $position2 -gt $FINAL_POSITION ]
-   then 
-      position2=$(($position2-$dice_times))
+	then 
+	    position2=$(($position2-$dice_times))
  	elif [ $position2 -eq $FINAL_POSITION ]
-   then 
-       echo $i "player win"
-       position2=$FINAL_POSITION;    
-   elif [ $position2 -lt $LAST_POSITION ]
-   then 
-       position2=$LAST_POSITION
-   fi
+   	then 
+            echo $i "player win"
+        position2=$FINAL_POSITION;    
+        elif [ $position2 -lt $LAST_POSITION ]
+        then 
+            position2=$LAST_POSITION
+        fi
 }
 
 function options_for_Position2()
@@ -86,14 +85,14 @@ function options_for_Position2()
 
 	random1=$((RANDOM%3))
 	case $random1 in  $NO_PLAY )
-		position2=$(($position2+0 ));;
+	position2=$(($position2+0 ));;
              $LADDER )
-      position2=$(($position2 + $dice_times)) 
-      position2Value
-      diceRolled
-      options_for_Position2 ;;
+        position2=$(($position2 + $dice_times)) 
+        position2Value
+        diceRolled
+        options_for_Position2 ;;
               $SNAKE )
-      position2=$(($position2 - $dice_times));;
+        position2=$(($position2 - $dice_times));;
 	esac 
 
 }
@@ -103,14 +102,14 @@ function options_for_Position1()
 
 	random1=$((RANDOM%3))
 	case $random1 in $NO_PLAY )
-      position1=$(( $position1+0 ));;
+        position1=$(( $position1+0 ));;
             $LADDER )
-      position1=$(($position1 + $dice_times))
-      position1Value
-      diceRolled
-      options_for_Position1 ;;
+        position1=$(($position1 + $dice_times))
+        position1Value
+        diceRolled
+        options_for_Position1 ;;
               $SNAKE )
-		position1=$(($position1 - $dice_times));;
+	position1=$(($position1 - $dice_times));;
 	esac 
 
 }
