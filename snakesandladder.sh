@@ -7,111 +7,107 @@ PLAYER=2
 LADDER=1
 SNAKE=2
 NO_PLAY=0
-FINAL_POSITION=100
+FINAL_POSITION=5
 LAST_POSITION=0
 #variable
-position1=0
-position2=0
+pos1=0
+pos2=0
 dice_Count=0
 dice_times=0
 
 function diceRolled()
 {
 	dice_times=$(( RANDOM%6+1 ))
-}
-
-function playGame()
-{
-	while ! [[ $position1 -eq $FINAL_POSITION || $position2 -eq $FINAL_POSITION ]]
-	do
-		diceRolled
-		startingGame
-	done
+        echo $dice_times
 }
 
 
 function startingGame()
 {
-  
+  while ! [[ $pos1 -eq $FINAL_POSITION || $pos2 -eq $FINAL_POSITION ]]
+	do
+		 var=$(diceRolled) 
    	for(( count=1; count<=$PLAYER; count++))
    	do
 		if [ $count -eq 1 ]
-		then
-        		options_for_Position1
-			position1Value
-   			echo $position1
+		then   
+                        
+        		position1=$( options_for_Position1 $var $pos1 )
+                        #position6=$(( $position1 ))
+			position1Value $position1 
+                        position6=$(( $position1 ))
    		elif [ $count -eq 2 ]
    		then
-			diceRolled
-   			options_for_Position2
-   			position2Value
-   			echo $position2
+			dice=$(diceRolled)
+   			position2=$( options_for_Position1 $dice $pos2 )
+		
+   			position1Value $position2
+                         position7=$(( $position2 ))
+   		#	echo $position2
 		fi    
+	done
 	done
 }
 
 function position1Value()
-{
-	if [ $position1 -gt $FINAL_POSITION ]
+{ 
+        position0=$1
+
+	if [ $position0 -gt $FINAL_POSITION ]
 	then 
-		position1=$(( $position1-$dice_times ))
- 	elif [ $position1 -eq $FINAL_POSITION ]
+		position0=$(( $position0-$2 ))
+               echo $position0
+
+ 	elif [ $position0 -eq $FINAL_POSITION ]
 	then   
-        	position1=$FINAL_POSITION
-        elif [ $position1 -lt $LAST_POSITION ]
+        	position0=$FINAL_POSITION
+                echo $position0
+
+        elif [ $position0 -lt $LAST_POSITION ]
         then 
-        	position1=$LAST_POSITION
-	fi 
+        	position0=$LAST_POSITION
+                 echo $position0
+
+	fi
 }
 
-function position2Value()
-{
 
-	if [ $position2 -gt $FINAL_POSITION ]
-	then 
-		position2=$(($position2-$dice_times))
- 	elif [ $position2 -eq $FINAL_POSITION ]
-   	then 
-        	position2=$FINAL_POSITION;    
-        elif [ $position2 -lt $LAST_POSITION ]
-        then 
-		position2=$LAST_POSITION
-        fi
-}
 
-function options_for_Position2()
-{
+#function options_for_Position2()
+#{
 
-	random1=$((RANDOM%3))
-	case $random1 in 
-			  $NO_PLAY )
-		position2=$(($position2+0 ));;
-             		  $LADDER )
-        	position2=$(($position2 + $dice_times)) 
-        	position2Value
-        	diceRolled
-        	options_for_Position2 ;;
-                           $SNAKE )
-        	position2=$(($position2 - $dice_times));;
-	esac 
+#	random1=$((RANDOM%3))
+#	case $random1 in 
+#			  $NO_PLAY )
+#		position2=$(($position2+0 ));;
+     #        		  $LADDER )
+     #   	position2=$(($position2 + $dice_times)) 
+     #   	position2Value
+    #    	diceRolled
+   #     	options_for_Position2 ;;
+  #                         $SNAKE )
+ #       	position2=$(($position2 - $dice_times));;
 
-}
+#	esac 
+
+#}
 
 function options_for_Position1()
-{
-
+{  
+ # echo $1
 	random1=$((RANDOM%3))
 	case $random1 in 
 			$NO_PLAY )
-        	position1=$(( $position1+0 ));;
+        	position=$(( $position+0 ));;
             		  $LADDER )
-        	position1=$(($position1 + $dice_times))
-         	position1Value
-        	diceRolled
-         	options_for_Position1 ;;
+        	position=$(($position + $1));;
+         #	position1Value
+        #	diceRolled
+         #	options_for_Position1
               		   $SNAKE )
-	  	position1=$(($position1 - $dice_times));;
+	  	position=$(($position - $1));;
 	esac 
-
+	echo $position
 }
-playGame
+startingGame
+
