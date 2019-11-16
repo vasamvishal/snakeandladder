@@ -56,7 +56,7 @@ function position1Value()
 	then 
 		position1=$(( $position1-$dice_times ))
  	elif [ $position1 -eq $FINAL_POSITION ]
-	then 
+	then   
         	position1=$FINAL_POSITION
         elif [ $position1 -lt $LAST_POSITION ]
         then 
@@ -72,7 +72,6 @@ function position2Value()
 		position2=$(($position2-$dice_times))
  	elif [ $position2 -eq $FINAL_POSITION ]
    	then 
-        	echo $i "player win"
         	position2=$FINAL_POSITION;    
         elif [ $position2 -lt $LAST_POSITION ]
         then 
@@ -83,15 +82,16 @@ function position2Value()
 function options_for_Position2()
 {
 
-		random1=$((RANDOM%3))
-	case $random1 in  $NO_PLAY )
+	random1=$((RANDOM%3))
+	case $random1 in 
+			  $NO_PLAY )
 		position2=$(($position2+0 ));;
-             		   $LADDER )
+             		  $LADDER )
         	position2=$(($position2 + $dice_times)) 
         	position2Value
         	diceRolled
         	options_for_Position2 ;;
-                            $SNAKE )
+                           $SNAKE )
         	position2=$(($position2 - $dice_times));;
 	esac 
 
@@ -100,8 +100,9 @@ function options_for_Position2()
 function options_for_Position1()
 {
 
-		random1=$((RANDOM%3))
-	case $random1 in $NO_PLAY )
+	random1=$((RANDOM%3))
+	case $random1 in 
+			$NO_PLAY )
         	position1=$(( $position1+0 ));;
             		  $LADDER )
         	position1=$(($position1 + $dice_times))
